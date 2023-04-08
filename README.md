@@ -26,7 +26,7 @@
 ### Tweaks and improvements
 
 The project is under development. The planned features will be briefly marked here:
-- [ ] TODO
+- [ ] Develop the API MVP
 
 ## 💻 Pre-requisites
 
