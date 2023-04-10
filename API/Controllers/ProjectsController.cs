@@ -12,7 +12,7 @@ public class ProjectsController : ControllerBase
   [HttpGet]
   public IActionResult Get(string query)
   {
-
+    // filtrar, buscar todos, etc.
     return Ok();
   }
 
@@ -20,14 +20,58 @@ public class ProjectsController : ControllerBase
   [HttpGet("{id}")]
   public IActionResult GetById(int id)
   {
+    // Search the object
     // return NotFound();
     return Ok();
   }
 
+  // api/projects/
   [HttpPost]
   public IActionResult Post([FromBody] CreateProjectModel createProject)
   {
-    // return BadRequest();
-    return Ok();
+    // Register the project
+    if (createProject.Title.Length > 50)
+    {
+      return BadRequest();
+    }
+    return CreatedAtAction(nameof(GetById), new { id = createProject.Id }, createProject);
+  }
+
+  [HttpPost("{id}/comments")]
+  public IActionResult PostComment(int id, [FromBody] CreateCommentsModel createComment)
+  {
+    return NoContent();
+  }
+
+  // api/projects/2
+  [HttpPut("{id}")]
+  public IActionResult Put(int id, [FromBody] UpdateProjectModel updateProject)
+  {
+    // Update the project
+    if (updateProject.Description.Length > 50)
+    {
+      return BadRequest();
+    }
+
+    return NoContent();
+  }
+
+  [HttpPut("{id}/start")]
+  public IActionResult Start(int id)
+  {
+    return NoContent();
+  }
+
+  [HttpPut("{id}/finish")]
+  public IActionResult Finish(int id)
+  {
+    return NoContent();
+  }
+
+  // api/projects/3
+  [HttpDelete("{id}")]
+  public IActionResult Delete(int id)
+  {
+    return NoContent();
   }
 }
