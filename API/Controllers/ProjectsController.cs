@@ -1,5 +1,6 @@
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace API.Controllers;
 
@@ -7,6 +8,11 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
 {
+  private readonly OpeningTimeOption _option;
+  public ProjectsController(IOptions<OpeningTimeOption> option)
+  {
+    _option = option.Value;
+  }
 
   // api/projects?query=net
   [HttpGet]
