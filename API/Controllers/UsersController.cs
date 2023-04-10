@@ -6,6 +6,12 @@ namespace API.Controllers
   [Route("api/users")]
   public class UsersController : ControllerBase
   {
+
+    public UsersController(ExampleClass exampleClass)
+    {
+
+    }
+
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
