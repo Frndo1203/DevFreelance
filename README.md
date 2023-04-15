@@ -26,7 +26,8 @@
 ### Tweaks and improvements
 
 The project is under development. The planned features will be briefly marked here:
-- [ ] Develop the API MVP
+- [X] Develop the API MVP
+- [ ] Apply Clean Architecture
 
 ## 💻 Pre-requisites
 
