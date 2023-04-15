@@ -37,13 +37,11 @@ namespace Application.Services.Implementations
       );
     }
 
-    public int Update(UpdateUserInputModel inputModel)
+    public void Update(UpdateUserInputModel inputModel)
     {
       var user = _dbContext.Users.SingleOrDefault(u => u.Id == inputModel.Id);
 
       user.Update(inputModel.FullName, inputModel.Email, inputModel.BirthDate);
-
-      return user.Id;
     }
   }
 }

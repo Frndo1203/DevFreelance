@@ -9,6 +9,6 @@ namespace Application.Services.Interfaces
 
     int Create(NewUserInputModel inputModel);
 
-    int Update(UpdateUserInputModel inputModel);
+    void Update(UpdateUserInputModel inputModel);
   }
 }

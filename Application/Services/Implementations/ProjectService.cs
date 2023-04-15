@@ -57,6 +57,11 @@ namespace Application.Services.Implementations
     {
       var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
+      if (project == null)
+      {
+        return null;
+      }
+
       return new ProjectDetailsViewModel(
         project.Id,
         project.Title,

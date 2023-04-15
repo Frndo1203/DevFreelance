@@ -34,5 +34,12 @@ namespace Core.Entities
     public IList<Project> OwnedProjects { get; private set; }
 
     public IList<Project> FreelanceProjects { get; private set; }
+
+    public void Update(string fullName, string email, DateTime birthDate)
+    {
+      FullName = fullName;
+      Email = email;
+      BirthDate = birthDate;
+    }
   }
 }
