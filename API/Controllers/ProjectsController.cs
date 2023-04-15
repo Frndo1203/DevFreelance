@@ -1,6 +1,6 @@
-using API.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Application.Services.Interfaces;
+using Application.InputModels;
 
 namespace API.Controllers;
 
@@ -8,57 +8,69 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
 {
-  private readonly OpeningTimeOption _option;
-  public ProjectsController(IOptions<OpeningTimeOption> option, ExampleClass exampleClass)
+  private readonly IProjectService _projectService;
+
+  public ProjectsController(IProjectService projectService)
   {
-    exampleClass.Name = "Updated at ProjectsController";
-    _option = option.Value;
+    _projectService = projectService;
   }
 
   // api/projects?query=net
   [HttpGet]
   public IActionResult Get(string query)
   {
-    // filtrar, buscar todos, etc.
-    return Ok();
+    var projects = _projectService.GetAll(query);
+
+    return Ok(projects);
   }
 
   // api/projects/599
   [HttpGet("{id}")]
   public IActionResult GetById(int id)
   {
-    // Search the object
-    // return NotFound();
-    return Ok();
+    var project = _projectService.GetById(id);
+
+    if (project == null)
+    {
+      return NotFound();
+    }
+    return Ok(project);
   }
 
   // api/projects/
   [HttpPost]
-  public IActionResult Post([FromBody] CreateProjectModel createProject)
+  public IActionResult Post([FromBody] NewProjectInputModel inputModel)
   {
     // Register the project
-    if (createProject.Title.Length > 50)
+    if (inputModel.Title.Length > 50)
     {
       return BadRequest();
     }
-    return CreatedAtAction(nameof(GetById), new { id = createProject.Id }, createProject);
+
+    var id = _projectService.Create(inputModel);
+
+    return CreatedAtAction(nameof(GetById), new { id }, inputModel);
   }
 
   [HttpPost("{id}/comments")]
-  public IActionResult PostComment(int id, [FromBody] CreateCommentsModel createComment)
+  public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel inputModel)
   {
+    _projectService.CreateComment(inputModel);
+
     return NoContent();
   }
 
   // api/projects/2
   [HttpPut("{id}")]
-  public IActionResult Put(int id, [FromBody] UpdateProjectModel updateProject)
+  public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
   {
     // Update the project
-    if (updateProject.Description.Length > 50)
+    if (inputModel.Description.Length > 50)
     {
       return BadRequest();
     }
+
+    _projectService.Update(inputModel);
 
     return NoContent();
   }
@@ -66,12 +78,16 @@ public class ProjectsController : ControllerBase
   [HttpPut("{id}/start")]
   public IActionResult Start(int id)
   {
+    _projectService.Start(id);
+
     return NoContent();
   }
 
   [HttpPut("{id}/finish")]
   public IActionResult Finish(int id)
   {
+    _projectService.Finish(id);
+
     return NoContent();
   }
 
@@ -79,6 +95,8 @@ public class ProjectsController : ControllerBase
   [HttpDelete("{id}")]
   public IActionResult Delete(int id)
   {
+    _projectService.Delete(id);
+
     return NoContent();
   }
 }

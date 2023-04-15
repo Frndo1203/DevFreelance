@@ -2,7 +2,7 @@ namespace Core.Entities
 {
   public class ProjectComment : BaseEntity
   {
-    public ProjectComment(int content, int idProject, int idUser)
+    public ProjectComment(string content, int idProject, int idUser)
     {
       Content = content;
       IdProject = idProject;
@@ -11,7 +11,7 @@ namespace Core.Entities
       CreatedAt = DateTime.Now;
     }
 
-    public int Content { get; private set; }
+    public string Content { get; private set; }
     public int IdProject { get; private set; }
 
     public int IdUser { get; private set; }
