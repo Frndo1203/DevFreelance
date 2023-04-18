@@ -29,11 +29,11 @@ namespace Core.Entities
 
     public bool Active { get; set; }
 
-    public IList<UserSkill> Skills { get; private set; }
+    public List<UserSkill> Skills { get; private set; }
 
-    public IList<Project> OwnedProjects { get; private set; }
+    public List<Project> OwnedProjects { get; private set; }
 
-    public IList<Project> FreelanceProjects { get; private set; }
+    public List<Project> FreelanceProjects { get; private set; }
 
     public List<ProjectComment> Comments { get; private set; }
 
