@@ -17,7 +17,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects?query=net
   [HttpGet]
-  public IActionResult Get(string query)
+  public IActionResult Get(string? query)
   {
     var projects = _projectService.GetAll(query);
 
