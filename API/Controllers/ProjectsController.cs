@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Services.Interfaces;
 using Application.InputModels;
+using MediatR;
+using Application.Commands.CreateProject;
 
 namespace API.Controllers;
 
@@ -9,10 +11,12 @@ namespace API.Controllers;
 public class ProjectsController : ControllerBase
 {
   private readonly IProjectService _projectService;
+  private readonly IMediator _mediator;
 
-  public ProjectsController(IProjectService projectService)
+  public ProjectsController(IProjectService projectService, IMediator mediator)
   {
     _projectService = projectService;
+    _mediator = mediator;
   }
 
   // api/projects?query=net
@@ -39,17 +43,17 @@ public class ProjectsController : ControllerBase
 
   // api/projects/
   [HttpPost]
-  public IActionResult Post([FromBody] NewProjectInputModel inputModel)
+  public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
   {
     // Register the project
-    if (inputModel.Title.Length > 50)
+    if (command.Title.Length > 50)
     {
       return BadRequest();
     }
 
-    var id = _projectService.Create(inputModel);
+    var id = await _mediator.Send(command);
 
-    return CreatedAtAction(nameof(GetById), new { id }, inputModel);
+    return CreatedAtAction(nameof(GetById), new { id }, command);
   }
 
   [HttpPost("{id}/comments")]
