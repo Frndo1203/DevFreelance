@@ -3,6 +3,7 @@ using Application.Services.Interfaces;
 using Application.ViewModels;
 using Core.Entities;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.Implementations
 {
@@ -59,7 +60,10 @@ namespace Application.Services.Implementations
 
     public ProjectDetailsViewModel GetById(int id)
     {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+      var project = _dbContext.Projects
+                    .Include(p => p.Client)
+                    .Include(p => p.Freelancer)
+                    .SingleOrDefault(p => p.Id == id);
 
       if (project == null)
       {
@@ -72,7 +76,9 @@ namespace Application.Services.Implementations
         project.Description,
         project.TotalCost,
         project.StartedAt,
-        project.FinishedAt
+        project.FinishedAt,
+        project.Client.FullName,
+        project.Freelancer.FullName
       );
     }
 

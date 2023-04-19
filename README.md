@@ -28,7 +28,8 @@
 The project is under development. The planned features will be briefly marked here:
 - [X] Develop the API MVP
 - [X] Apply Clean Architecture
-- [ ] Plug ORM
+- [X] Create EntityFramework Core Context
+- [ ] Apply CQRS
 
 ## 💻 Pre-requisites
 
