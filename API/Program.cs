@@ -12,6 +12,7 @@ builder.Services.Configure<OpeningTimeOption>(builder.Configuration.GetSection("
 // builder.Services.AddSingleton<DevFreelanceDbContext>();
 var connectionString = builder.Configuration.GetConnectionString("DevFreelanceCs");
 builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseSqlServer(connectionString));
+// builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseInMemoryDatabase("DevFreelance"));
 
 //scopes
 builder.Services.AddScoped<IProjectService, ProjectService>();
