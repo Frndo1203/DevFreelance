@@ -1,5 +1,6 @@
 
 
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Enums;
 
 namespace Core.Entities
@@ -25,7 +26,11 @@ namespace Core.Entities
 
     public int IdClient { get; private set; }
 
+    public User Client { get; private set; }
+
     public int IdFreelancer { get; private set; }
+
+    public User Freelancer { get; private set; }
 
     public decimal? TotalCost { get; private set; }
 
