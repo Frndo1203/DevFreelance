@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Application.Services.Interfaces;
 using MediatR;
 using Application.Commands.CreateProject;
 using Application.Commands.CreateComment;

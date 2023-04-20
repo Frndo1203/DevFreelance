@@ -1,7 +1,6 @@
 using API.Models;
 using MediatR;
 using Application.Commands.CreateUser;
-using Application.Services.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Application.Commands.UpdateUser;
