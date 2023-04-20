@@ -1,18 +1,22 @@
 using API.Models;
-using Application.InputModels;
+using MediatR;
+using Application.Commands.CreateUser;
 using Application.Services.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Application.Commands.UpdateUser;
 
 namespace API.Controllers
 {
   [Route("api/users")]
   public class UsersController : ControllerBase
   {
+    private readonly IMediator _mediator;
     private readonly IUserService _userService;
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IMediator mediator)
     {
       _userService = userService;
+      _mediator = mediator;
     }
 
     [HttpGet("{id}")]
@@ -24,18 +28,18 @@ namespace API.Controllers
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] NewUserInputModel inputModel)
+    public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
-      var id = _userService.Create(inputModel);
+      var id = await _mediator.Send(command);
 
-      return CreatedAtAction(nameof(GetById), new { id }, inputModel);
+      return CreatedAtAction(nameof(GetById), new { id }, command);
     }
 
     // api/users/1/login
     [HttpPut("{id}/login")]
-    public IActionResult Login(int id, [FromBody] UpdateUserInputModel inputModel)
+    public IActionResult Login(int id, [FromBody] UpdateUserCommand command)
     {
-      _userService.Update(inputModel);
+      _mediator.Send(command);
 
       return NoContent();
     }

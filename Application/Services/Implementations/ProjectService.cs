@@ -1,4 +1,3 @@
-using Application.InputModels;
 using Application.Services.Interfaces;
 using Application.ViewModels;
 using Core.Entities;
@@ -13,29 +12,6 @@ namespace Application.Services.Implementations
     public ProjectService(DevFreelanceDbContext dbContext)
     {
       _dbContext = dbContext;
-    }
-
-    public void CreateComment(CreateCommentInputModel inputModel)
-    {
-      var comment = new ProjectComment(inputModel.Content, inputModel.IdProject, inputModel.IdUser);
-      _dbContext.Comments.Add(comment);
-      _dbContext.SaveChanges();
-    }
-
-    public void Delete(int id)
-    {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-      project.Cancel();
-      _dbContext.SaveChanges();
-    }
-
-    public void Finish(int id)
-    {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-      project.Finish();
-      _dbContext.SaveChanges();
     }
 
     public List<ProjectViewModel> GetAll(string? query)
@@ -71,24 +47,6 @@ namespace Application.Services.Implementations
         project.Client.FullName,
         project.Freelancer.FullName
       );
-    }
-
-    public void Start(int id)
-    {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-      project.Start();
-
-      _dbContext.SaveChanges();
-    }
-
-    public void Update(UpdateProjectInputModel inputModel)
-    {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
-
-      project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
-
-      _dbContext.SaveChanges();
     }
   }
 }

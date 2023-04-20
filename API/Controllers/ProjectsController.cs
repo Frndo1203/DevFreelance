@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Services.Interfaces;
-using Application.InputModels;
 using MediatR;
 using Application.Commands.CreateProject;
+using Application.Commands.CreateComment;
+using Application.Commands.DeleteProject;
+using Application.Commands.FinishProject;
+using Application.Commands.UpdateProject;
 
 namespace API.Controllers;
 
@@ -57,49 +60,59 @@ public class ProjectsController : ControllerBase
   }
 
   [HttpPost("{id}/comments")]
-  public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel inputModel)
+  public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
   {
-    _projectService.CreateComment(inputModel);
+    await _mediator.Send(command);
 
     return NoContent();
   }
 
   // api/projects/2
   [HttpPut("{id}")]
-  public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
+  public async Task<IActionResult> Put(int id, [FromBody] UpdateProjectCommand command)
   {
     // Update the project
-    if (inputModel.Description.Length > 50)
+    if (command.Description.Length > 50)
     {
       return BadRequest();
     }
 
-    _projectService.Update(inputModel);
+    await _mediator.Send(command);
 
     return NoContent();
   }
 
   [HttpPut("{id}/start")]
-  public IActionResult Start(int id)
+  public async Task<IActionResult> Start(int id)
   {
-    _projectService.Start(id);
+    var command = StartProjectCommand(id);
+    await _mediator.Send(command);
 
     return NoContent();
   }
 
-  [HttpPut("{id}/finish")]
-  public IActionResult Finish(int id)
+  private object StartProjectCommand(int id)
   {
-    _projectService.Finish(id);
+    throw new NotImplementedException();
+  }
+
+  [HttpPut("{id}/finish")]
+  public async Task<IActionResult> Finish(int id)
+  {
+    var command = new FinishProjectCommand(id);
+
+    await _mediator.Send(command);
 
     return NoContent();
   }
 
   // api/projects/3
   [HttpDelete("{id}")]
-  public IActionResult Delete(int id)
+  public async Task<IActionResult> Delete(int id)
   {
-    _projectService.Delete(id);
+    var command = new DeleteProjectCommand(id);
+
+    await _mediator.Send(command);
 
     return NoContent();
   }
