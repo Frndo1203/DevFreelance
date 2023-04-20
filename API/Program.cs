@@ -1,7 +1,5 @@
 using API.Models;
 using Application.Commands.CreateProject;
-using Application.Services.Implementations;
-using Application.Services.Interfaces;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DevFreelanceCs");
 builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseSqlServer(connectionString));
 // builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseInMemoryDatabase("DevFreelance"));
-
-//scopes
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
 
 builder.Services.AddControllers();
 

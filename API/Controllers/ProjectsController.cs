@@ -6,6 +6,8 @@ using Application.Commands.CreateComment;
 using Application.Commands.DeleteProject;
 using Application.Commands.FinishProject;
 using Application.Commands.UpdateProject;
+using Application.Queries.GetAllProjects;
+using Application.Queries.GetProjectById;
 
 namespace API.Controllers;
 
@@ -13,29 +15,29 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
 {
-  private readonly IProjectService _projectService;
   private readonly IMediator _mediator;
 
-  public ProjectsController(IProjectService projectService, IMediator mediator)
+  public ProjectsController(IMediator mediator)
   {
-    _projectService = projectService;
     _mediator = mediator;
   }
 
   // api/projects?query=net
   [HttpGet]
-  public IActionResult Get(string? query)
+  public async Task<IActionResult> Get(string? query)
   {
-    var projects = _projectService.GetAll(query);
+    var getAllProjectsQuery = new GetAllProjectsQuery(query);
+    var projects = await _mediator.Send(getAllProjectsQuery);
 
     return Ok(projects);
   }
 
   // api/projects/599
   [HttpGet("{id}")]
-  public IActionResult GetById(int id)
+  public async Task<IActionResult> GetById(int id)
   {
-    var project = _projectService.GetById(id);
+    var query = new GetProjectByIdQuery(id);
+    var project = await _mediator.Send(query);
 
     if (project == null)
     {

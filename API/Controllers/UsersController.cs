@@ -5,6 +5,7 @@ using Application.Services.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Application.Commands.UpdateUser;
+using Application.Queries.GetUser;
 
 namespace API.Controllers
 {
@@ -12,17 +13,16 @@ namespace API.Controllers
   public class UsersController : ControllerBase
   {
     private readonly IMediator _mediator;
-    private readonly IUserService _userService;
-    public UsersController(IUserService userService, IMediator mediator)
+    public UsersController(IMediator mediator)
     {
-      _userService = userService;
       _mediator = mediator;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-      var user = _userService.GetById(id);
+      var query = new GetUserQuery(id);
+      var user = await _mediator.Send(query);
 
       return Ok(user);
     }
