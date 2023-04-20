@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MediatR;
 
-namespace Application.InputModels
+namespace Application.Commands.UpdateUser
 {
-  public class UpdateUserInputModel
+  public class UpdateUserCommand : IRequest<Unit>
   {
     public int Id { get; set; }
     public string FullName { get; private set; }
@@ -13,6 +10,5 @@ namespace Application.InputModels
     public String Email { get; private set; }
 
     public DateTime BirthDate { get; private set; }
-
   }
 }
