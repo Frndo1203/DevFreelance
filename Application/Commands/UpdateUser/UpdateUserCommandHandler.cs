@@ -1,22 +1,22 @@
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
 
 namespace Application.Commands.UpdateUser
 {
   public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public UpdateUserCommandHandler(DevFreelanceDbContext dbContext)
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
+    public UpdateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
-      _dbContext = dbContext;
+      _userRepository = userRepository;
+      _unitOfWork = unitOfWork;
     }
     public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-      var user = _dbContext.Users.SingleOrDefault(u => u.Id == request.Id);
-
-      user.Update(request.FullName, request.Email, request.BirthDate);
-
-      await _dbContext.SaveChangesAsync();
+      var user = await _userRepository.GetUserDetailsAsync(request.Id);
+      user?.Update(request.FullName, request.Email, request.BirthDate);
+      await _unitOfWork.SaveChangesAsync();
 
       return Unit.Value;
     }

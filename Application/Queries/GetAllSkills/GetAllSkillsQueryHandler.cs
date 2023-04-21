@@ -1,24 +1,23 @@
 using Application.ViewModels;
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.GetAllSkills
 {
   public class GetAllSkillsQueryHandler : IRequestHandler<GetAllSkillsQuery, List<SkillViewModel>>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public GetAllSkillsQueryHandler(DevFreelanceDbContext dbContext)
+    private readonly ISkillsRepository _skillsRepository;
+    public GetAllSkillsQueryHandler(ISkillsRepository skillsRepository)
     {
-      _dbContext = dbContext;
+      _skillsRepository = skillsRepository;
     }
     public async Task<List<SkillViewModel>> Handle(GetAllSkillsQuery request, CancellationToken cancellationToken)
     {
-      var skill = _dbContext.Skills;
+      var skill = await _skillsRepository.GetAllAsync();
 
-      var skillList = await skill
-                            .Select(s => new SkillViewModel(s.Id, s.Description))
-                            .ToListAsync();
+      var skillList = skill
+                    .Select(s => new SkillViewModel(s.Id, s.Description))
+                    .ToList();
 
       return skillList;
     }

@@ -1,5 +1,5 @@
 using Application.ViewModels;
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,14 +7,14 @@ namespace Application.Queries.GetUser
 {
   public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDetailsViewModel>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public GetUserQueryHandler(DevFreelanceDbContext dbContext)
+    private readonly IUserRepository _userRepository;
+    public GetUserQueryHandler(IUserRepository userRepository)
     {
-      _dbContext = dbContext;
+      _userRepository = userRepository;
     }
     public async Task<UserDetailsViewModel> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-      var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == request.Id);
+      var user = await _userRepository.GetUserDetailsAsync(request.Id);
 
       return new UserDetailsViewModel(
         user.FullName,

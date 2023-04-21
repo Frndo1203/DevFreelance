@@ -1,21 +1,29 @@
-using API.Models;
 using Application.Commands.CreateProject;
+using Core.Repositories;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// builder.Services.AddSingleton<DevFreelanceDbContext>();
+// Dependency Injection
+// Database
 var connectionString = builder.Configuration.GetConnectionString("DevFreelanceCs");
 builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseSqlServer(connectionString));
-// builder.Services.AddDbContext<DevFreelanceDbContext>(options => options.UseInMemoryDatabase("DevFreelance"));
+
+// Repositories
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ISkillsRepository, SkillsRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// Mediator for CQRS
+builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 builder.Services.AddControllers();
 
-builder.Services.AddMediatR(typeof(CreateProjectCommand));
-
+// Initiate Swagger configs
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

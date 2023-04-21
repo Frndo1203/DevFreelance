@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
 
 namespace Application.Commands.CreateComment
 {
   public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, Unit>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public CreateCommentCommandHandler(DevFreelanceDbContext dbContext)
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProjectRepository _projectRepository;
+    public CreateCommentCommandHandler(IProjectRepository projectRepository, IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+      _projectRepository = projectRepository;
+      _unitOfWork = unitOfWork;
     }
     public async Task<Unit> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
       var comment = new ProjectComment(request.Content, request.IdProject, request.IdUser);
-      await _dbContext.Comments.AddAsync(comment);
-      await _dbContext.SaveChangesAsync();
+      await _projectRepository.AddCommentAsync(comment);
+      await _unitOfWork.SaveChangesAsync();
 
       return Unit.Value;
     }
