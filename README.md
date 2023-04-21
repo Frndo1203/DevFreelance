@@ -5,36 +5,42 @@
 ![Github open issues](https://img.shields.io/github/issues/frndo1203/DevFreelance)
 ![Bitbucket open pull requests](https://img.shields.io/github/issues-pr/frndo1203/DevFreelance)
 
-
 > This project it's the backend of a Freelance Website. Here I defined all the functionalities of the project, as well as the planned improvements and tweaks to be solved.
 
 # Project Description
+
 ## User Histories
+
 - Offer a unified platform for <b>clients</b> <i>to hire</i>the best <b>freelancers</b> for their <b>projects</b> in a reliable and managed way.
 - <b>Clients</b> <i>define</i> the characteristics of the <b>projects</b> they <i>publish</i>. <b>Freelancers</b> <i>communicate</i> with them about the <b>project</b>, and their <i>skills</i>.
 - The <b>client</b> <i>starts</i> the <b>project</b> with a <b>freelancer</b> who has a suitable <b>profile</b> for the <b>project</b>, <i>interacting</i> with him until <i>completing</i> the <b>project</b>.
 
 ## Functional Requirements
+
 - Services Registration, Update, Cancellation and Consultation.
 - Freelancer and Client profile registration.
 - Add coments for a service.
 - Define, initiate and finish a project
 
 # Solution
+
 > TODO
 
 ### Tweaks and improvements
 
 The project is under development. The planned features will be briefly marked here:
-- [X] Develop the API MVP
-- [X] Apply Clean Architecture
-- [X] Create EntityFramework Core Context
-- [ ] Apply CQRS
+
+- [x] Develop the API MVP
+- [x] Apply Clean Architecture
+- [x] Create EntityFramework Core Context
+- [x] Apply CQRS
+- [ ] Apply Repository Pattern
 
 ## 💻 Pre-requisites
 
 Before starting this project you need to have the following tools installed on your environment:
-* `<.net5.0  or higher>`
+
+- `<.net5.0  or higher>`
 
 ## 🚀 Cloning the project
 
@@ -45,6 +51,7 @@ git clone https://github.com/Frndo1203/DevFreelance.git
 ```
 
 ## 📫 Contributing to the project
+
 For contributing to the project, follow these steps:
 
 1. Fork this repository
@@ -56,7 +63,6 @@ For contributing to the project, follow these steps:
 > All the PRs are submited to approval of mine.
 
 ## 🤝 Main Contributors
-
 
 <table>
   <tr>

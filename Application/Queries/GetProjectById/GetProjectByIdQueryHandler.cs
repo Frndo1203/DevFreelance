@@ -1,23 +1,19 @@
 using Application.ViewModels;
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.GetProjectById
 {
   public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDetailsViewModel>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public GetProjectByIdQueryHandler(DevFreelanceDbContext dbContext)
+    private readonly IProjectRepository _projectRepository;
+    public GetProjectByIdQueryHandler(IProjectRepository projectRepository)
     {
-      _dbContext = dbContext;
+      _projectRepository = projectRepository;
     }
     public async Task<ProjectDetailsViewModel> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-      var project = await _dbContext.Projects
-                        .Include(p => p.Client)
-                        .Include(p => p.Freelancer)
-                        .SingleOrDefaultAsync(p => p.Id == request.Id);
+      var project = await _projectRepository.GetByIdAsync(request.Id);
 
       if (project == null)
       {

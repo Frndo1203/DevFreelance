@@ -1,15 +1,17 @@
 using Core.Entities;
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
 
 namespace Application.Commands.CreateUser
 {
   public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public CreateUserCommandHandler(DevFreelanceDbContext dbContext)
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
+    public CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
-      _dbContext = dbContext;
+      _userRepository = userRepository;
+      _unitOfWork = unitOfWork;
     }
 
     public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -20,8 +22,8 @@ namespace Application.Commands.CreateUser
         request.BirthDate
         );
 
-      await _dbContext.Users.AddAsync(user);
-      await _dbContext.SaveChangesAsync();
+      await _userRepository.AddAsync(user);
+      await _unitOfWork.SaveChangesAsync();
 
       return user.Id;
     }

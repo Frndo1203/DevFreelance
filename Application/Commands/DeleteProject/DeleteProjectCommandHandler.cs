@@ -1,21 +1,22 @@
-using Infrastructure.Persistence;
+using Core.Repositories;
 using MediatR;
 
 namespace Application.Commands.DeleteProject
 {
   public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, Unit>
   {
-    private readonly DevFreelanceDbContext _dbContext;
-    public DeleteProjectCommandHandler(DevFreelanceDbContext dbContext)
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProjectRepository _projectRepository;
+    public DeleteProjectCommandHandler(IProjectRepository projectRepository, IUnitOfWork unitOfWork)
     {
-      _dbContext = dbContext;
+      _projectRepository = projectRepository;
+      _unitOfWork = unitOfWork;
     }
     public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-      var project = _dbContext.Projects.SingleOrDefault(p => p.Id == request.Id);
-
-      project.Cancel();
-      await _dbContext.SaveChangesAsync();
+      var project = await _projectRepository.GetByIdAsync(request.Id);
+      project?.Cancel();
+      await _unitOfWork.SaveChangesAsync();
 
       return Unit.Value;
     }
