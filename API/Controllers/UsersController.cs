@@ -1,4 +1,3 @@
-using API.Models;
 using MediatR;
 using Application.Commands.CreateUser;
 using Infrastructure.Persistence;
