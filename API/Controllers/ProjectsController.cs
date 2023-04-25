@@ -49,12 +49,6 @@ public class ProjectsController : ControllerBase
   [HttpPost]
   public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
   {
-    // Register the project
-    if (command.Title.Length > 50)
-    {
-      return BadRequest();
-    }
-
     var id = await _mediator.Send(command);
 
     return CreatedAtAction(nameof(GetById), new { id }, command);
@@ -72,12 +66,6 @@ public class ProjectsController : ControllerBase
   [HttpPut("{id}")]
   public async Task<IActionResult> Put(int id, [FromBody] UpdateProjectCommand command)
   {
-    // Update the project
-    if (command.Description.Length > 50)
-    {
-      return BadRequest();
-    }
-
     await _mediator.Send(command);
 
     return NoContent();

@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Application.Commands.UpdateUser;
 using Application.Queries.GetUser;
+using System.Linq;
 
 namespace API.Controllers
 {
