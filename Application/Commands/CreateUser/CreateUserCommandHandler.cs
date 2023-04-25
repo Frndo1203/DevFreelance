@@ -19,7 +19,8 @@ namespace Application.Commands.CreateUser
       var user = new User(
         request.FullName,
         request.Email,
-        request.BirthDate
+        request.BirthDate,
+        request.Password
         );
 
       await _userRepository.AddAsync(user);

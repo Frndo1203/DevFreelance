@@ -1,5 +1,9 @@
+using API.Filters;
 using Application.Commands.CreateProject;
+using Application.Validators;
 using Core.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -21,7 +25,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Mediator for CQRS
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter)));
+builder.Services
+  .AddValidatorsFromAssemblyContaining<CreateUserValidator>()
+  .AddFluentValidationAutoValidation()
+  .AddFluentValidationClientsideAdapters();
 
 // Initiate Swagger configs
 builder.Services.AddEndpointsApiExplorer();

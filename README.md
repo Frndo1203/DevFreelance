@@ -34,7 +34,8 @@ The project is under development. The planned features will be briefly marked he
 - [x] Apply Clean Architecture
 - [x] Create EntityFramework Core Context
 - [x] Apply CQRS
-- [ ] Apply Repository Pattern
+- [x] Apply Repository Pattern
+- [ ] Create validators for APIs
 
 ## 💻 Pre-requisites
 

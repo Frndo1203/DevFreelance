@@ -15,7 +15,7 @@ namespace Application.Commands.UpdateUser
     public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
       var user = await _userRepository.GetUserDetailsAsync(request.Id);
-      user?.Update(request.FullName, request.Email, request.BirthDate);
+      user?.Update(request.FullName, request.Password, request.Email, request.BirthDate);
       await _unitOfWork.SaveChangesAsync();
 
       return Unit.Value;

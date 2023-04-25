@@ -7,9 +7,10 @@ namespace Core.Entities
 {
   public class User : BaseEntity
   {
-    public User(string fullName, string email, DateTime birthDate)
+    public User(string fullName, string email, DateTime birthDate, string password)
     {
       FullName = fullName;
+      Password = password;
       Email = email;
       Active = true;
       BirthDate = birthDate;
@@ -20,6 +21,8 @@ namespace Core.Entities
       FreelanceProjects = new List<Project>();
     }
     public string FullName { get; private set; }
+
+    public string Password { get; private set; }
 
     public String Email { get; private set; }
 
@@ -37,9 +40,10 @@ namespace Core.Entities
 
     public List<ProjectComment> Comments { get; private set; }
 
-    public void Update(string fullName, string email, DateTime birthDate)
+    public void Update(string fullName, string password, string email, DateTime birthDate)
     {
       FullName = fullName;
+      Password = password;
       Email = email;
       BirthDate = birthDate;
     }
