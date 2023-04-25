@@ -1,5 +1,8 @@
 using Application.Commands.CreateProject;
+using Application.Validators;
 using Core.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -22,6 +25,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 builder.Services.AddControllers();
+builder.Services
+  .AddValidatorsFromAssemblyContaining<CreateUserValidator>()
+  .AddFluentValidationAutoValidation()
+  .AddFluentValidationClientsideAdapters();
 
 // Initiate Swagger configs
 builder.Services.AddEndpointsApiExplorer();
