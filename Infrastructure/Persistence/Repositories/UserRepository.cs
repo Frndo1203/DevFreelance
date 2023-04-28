@@ -21,5 +21,16 @@ namespace Infrastructure.Persistence.Repositories
     {
       await _dbContext.Users.AddAsync(user);
     }
+
+    public async Task<int?> GetUserIdByEmailAsync(string email)
+    {
+      var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email);
+      return user?.Id;
+    }
+
+    public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string passwordHash)
+    {
+      return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+    }
   }
 }

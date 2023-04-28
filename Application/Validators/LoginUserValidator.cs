@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
-using Application.Commands.UpdateUser;
+using Application.Commands.LoginUser;
 using FluentValidation;
 
 namespace Application.Validators
 {
-  public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
+  public class UpdateUserValidator : AbstractValidator<LoginUserCommand>
   {
     public UpdateUserValidator()
     {
