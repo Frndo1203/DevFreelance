@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Queries.GetUser;
 using System.Linq;
 using Application.Commands.LoginUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+  [ApiController]
+  [Authorize]
   [Route("api/users")]
   public class UsersController : ControllerBase
   {
@@ -26,6 +29,7 @@ namespace API.Controllers
       return Ok(user);
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
     {
@@ -35,6 +39,7 @@ namespace API.Controllers
     }
 
     // api/users/1/login
+    [AllowAnonymous]
     [HttpPut("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
     {

@@ -7,10 +7,13 @@ using Application.Commands.FinishProject;
 using Application.Commands.UpdateProject;
 using Application.Queries.GetAllProjects;
 using Application.Queries.GetProjectById;
+using Microsoft.AspNetCore.Authorization;
+using Application.Commands.StartProject;
 
 namespace API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
 {
@@ -23,6 +26,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects?query=net
   [HttpGet]
+  [Authorize(Roles = "freelancer, client")]
   public async Task<IActionResult> Get(string? query)
   {
     var getAllProjectsQuery = new GetAllProjectsQuery(query);
@@ -33,6 +37,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects/599
   [HttpGet("{id}")]
+  [Authorize(Roles = "freelancer, client")]
   public async Task<IActionResult> GetById(int id)
   {
     var query = new GetProjectByIdQuery(id);
@@ -47,6 +52,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects/
   [HttpPost]
+  [Authorize(Roles = "client")]
   public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
   {
     var id = await _mediator.Send(command);
@@ -55,6 +61,7 @@ public class ProjectsController : ControllerBase
   }
 
   [HttpPost("{id}/comments")]
+  [Authorize(Roles = "client, freelancer")]
   public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
   {
     await _mediator.Send(command);
@@ -64,6 +71,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects/2
   [HttpPut("{id}")]
+  [Authorize(Roles = "client")]
   public async Task<IActionResult> Put(int id, [FromBody] UpdateProjectCommand command)
   {
     await _mediator.Send(command);
@@ -72,20 +80,17 @@ public class ProjectsController : ControllerBase
   }
 
   [HttpPut("{id}/start")]
+  [Authorize(Roles = "client")]
   public async Task<IActionResult> Start(int id)
   {
-    var command = StartProjectCommand(id);
+    var command = new StartProjectCommand(id);
     await _mediator.Send(command);
 
     return NoContent();
   }
 
-  private object StartProjectCommand(int id)
-  {
-    throw new NotImplementedException();
-  }
-
   [HttpPut("{id}/finish")]
+  [Authorize(Roles = "client")]
   public async Task<IActionResult> Finish(int id)
   {
     var command = new FinishProjectCommand(id);
@@ -97,6 +102,7 @@ public class ProjectsController : ControllerBase
 
   // api/projects/3
   [HttpDelete("{id}")]
+  [Authorize(Roles = "client")]
   public async Task<IActionResult> Delete(int id)
   {
     var command = new DeleteProjectCommand(id);
