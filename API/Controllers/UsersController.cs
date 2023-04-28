@@ -2,9 +2,9 @@ using MediatR;
 using Application.Commands.CreateUser;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Application.Commands.UpdateUser;
 using Application.Queries.GetUser;
 using System.Linq;
+using Application.Commands.LoginUser;
 
 namespace API.Controllers
 {
@@ -35,12 +35,17 @@ namespace API.Controllers
     }
 
     // api/users/1/login
-    [HttpPut("{id}/login")]
-    public IActionResult Login(int id, [FromBody] UpdateUserCommand command)
+    [HttpPut("login")]
+    public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
     {
-      _mediator.Send(command);
+      var loginUserViewModel = await _mediator.Send(command);
 
-      return NoContent();
+      if (loginUserViewModel == null)
+      {
+        return BadRequest();
+      }
+
+      return Ok(loginUserViewModel);
     }
   }
 }

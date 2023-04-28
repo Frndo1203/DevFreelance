@@ -7,11 +7,12 @@ namespace Core.Entities
 {
   public class User : BaseEntity
   {
-    public User(string fullName, string email, DateTime birthDate, string password)
+    public User(string fullName, string email, DateTime birthDate, string password, string role)
     {
       FullName = fullName;
       Password = password;
       Email = email;
+      Role = role;
       Active = true;
       BirthDate = birthDate;
       CreatedAt = DateTime.Now;
@@ -23,6 +24,8 @@ namespace Core.Entities
     public string FullName { get; private set; }
 
     public string Password { get; private set; }
+
+    public string Role { get; private set; }
 
     public String Email { get; private set; }
 

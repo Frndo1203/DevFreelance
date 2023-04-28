@@ -8,6 +8,8 @@ namespace Application.Commands.CreateUser
 
     public string Password { get; set; }
 
+    public string Role { get; set; }
+
     public String Email { get; set; }
 
     public DateTime BirthDate { get; set; }
