@@ -8,8 +8,8 @@ namespace Application.ViewModels
                                   decimal? totalCost,
                                    DateTime? startedAt,
                                    DateTime? finishedAt,
-                                   string clientFullName,
-                                   string freelancerFullName)
+                                   string? clientFullName,
+                                   string? freelancerFullName)
     {
       Id = id;
       Title = title;
@@ -31,8 +31,8 @@ namespace Application.ViewModels
 
     public DateTime? FinishedAt { get; private set; }
 
-    public string ClientFullName { get; private set; }
+    public string? ClientFullName { get; private set; }
 
-    public string FreelancerFullName { get; private set; }
+    public string? FreelancerFullName { get; private set; }
   }
 }

@@ -1,7 +1,6 @@
 using Application.ViewModels;
 using Core.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Application.Queries.GetAllProjects
