@@ -31,7 +31,7 @@ namespace UnitTests.Application.Queries
       Assert.NotEmpty(projectViewModelList);
       Assert.Equal(projects.Count, projectViewModelList.Count);
 
-			projectRepositoryMock.Verify(pr => pr.GetAllAsync().Result, Times.Once);
+      projectRepositoryMock.Verify(pr => pr.GetAllAsync().Result, Times.Once());
     }
   }
 }
