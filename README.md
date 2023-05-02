@@ -35,7 +35,9 @@ The project is under development. The planned features will be briefly marked he
 - [x] Create EntityFramework Core Context
 - [x] Apply CQRS
 - [x] Apply Repository Pattern
-- [ ] Create validators for APIs
+- [X] Create validators for APIs
+- [X] Create JWT Authentication and Authorization
+- [ ] Implement Unit tests
 
 ## 💻 Pre-requisites
 
