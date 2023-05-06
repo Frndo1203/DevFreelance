@@ -7,6 +7,8 @@ using Core.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Auth;
+using Infrastructure.MessageBus;
+using Infrastructure.Payments;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -28,6 +30,11 @@ builder.Services.AddScoped<ISkillsRepository, SkillsRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
+
+//HttpClient
+builder.Services.AddHttpClient();
 
 // Mediator for CQRS
 builder.Services.AddMediatR(typeof(CreateProjectCommand));

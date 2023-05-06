@@ -93,7 +93,10 @@ public class ProjectsController : ControllerBase
   [Authorize(Roles = "client")]
   public async Task<IActionResult> Finish(int id)
   {
-    var command = new FinishProjectCommand(id);
+    var command = new FinishProjectCommand
+    {
+      Id = id
+    };
 
     await _mediator.Send(command);
 

@@ -61,6 +61,12 @@ namespace Core.Entities
       }
     }
 
+    public void SetPaymentPending()
+    {
+      Status = EProjectStatus.PaymentPending;
+      FinishedAt = null;
+    }
+
     public void Start()
     {
       if (Status == EProjectStatus.Created || Status == EProjectStatus.Suspended)
