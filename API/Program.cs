@@ -1,12 +1,15 @@
 using System.Text;
 using API.Filters;
 using Application.Commands.CreateProject;
+using Application.Consumers;
 using Application.Validators;
 using Core.Repositories;
 using Core.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Auth;
+using Infrastructure.MessageBus;
+using Infrastructure.Payments;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -28,6 +31,12 @@ builder.Services.AddScoped<ISkillsRepository, SkillsRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
+
+//HttpClient
+builder.Services.AddHttpClient();
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 // Mediator for CQRS
 builder.Services.AddMediatR(typeof(CreateProjectCommand));

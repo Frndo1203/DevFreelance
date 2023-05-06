@@ -24,7 +24,8 @@
 
 # Solution
 
-> TODO
+> This project was implemented using Clean Architecture and DDD principles for solving problems like scalability
+> and ubiquous language for the application. This project also consumes data from the microsservice https://github.com/Frndo1203/DevFreelance.Payments/tree/main
 
 ### Tweaks and improvements
 
@@ -37,7 +38,8 @@ The project is under development. The planned features will be briefly marked he
 - [x] Apply Repository Pattern
 - [X] Create validators for APIs
 - [X] Create JWT Authentication and Authorization
-- [ ] Implement Unit tests
+- [X] Implement Unit tests
+- [X] Connect with Payments Microsservice
 
 ## 💻 Pre-requisites
 
