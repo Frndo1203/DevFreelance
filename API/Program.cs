@@ -1,6 +1,7 @@
 using System.Text;
 using API.Filters;
 using Application.Commands.CreateProject;
+using Application.Consumers;
 using Application.Validators;
 using Core.Repositories;
 using Core.Services;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IMessageBusService, MessageBusService>();
 
 //HttpClient
 builder.Services.AddHttpClient();
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 // Mediator for CQRS
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
